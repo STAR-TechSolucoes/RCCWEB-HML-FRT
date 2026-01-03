@@ -1,0 +1,18 @@
+<div>
+  <label [for]="id" class="form-label">
+    {{ label }} <span *ngIf="required" class="required-asterisk">*</span>
+  </label>
+  <input
+    [type]="type"
+    class="form-control"
+    [id]="id"
+    [name]="name"
+    [(ngModel)]="value"
+    [required]="required"
+    [placeholder]="placeholder"
+    [readonly]="readonly"
+    (input)="onInput($event)"
+    [disabled]="disabled"
+    [attr.maxLength]="maxLength ? maxLength : null"
+  />
+</div>

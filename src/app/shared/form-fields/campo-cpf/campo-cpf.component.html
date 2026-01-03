@@ -1,0 +1,10 @@
+<app-campo-texto
+  label="CPF"
+  name="cpf"
+  id="cpf"
+  placeholder="000.000.000-00"
+  [required]="required"
+  [(value)]="value"
+  (valueChange)="formatarCpf()"
+  [maxLength]="14"
+></app-campo-texto>

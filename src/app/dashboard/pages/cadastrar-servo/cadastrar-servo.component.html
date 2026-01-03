@@ -1,0 +1,77 @@
+<main class="content-fluid">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Cadastro de Servos</h2>
+      <form #servoForm="ngForm" (ngSubmit)="cadastrarServo()" novalidate>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <app-campo-texto label="Nome Completo" [(value)]="servo.nome" [required] = "true"></app-campo-texto>
+          </div>
+          <div class="col-md-2 mb-3">
+            <app-campo-texto label="Usuário (para Login)" [(value)]="servo.nomusu" [required] = "true"></app-campo-texto>
+          </div>
+          <div class="col-md-2 mb-3">
+            <label for="ativo" class="form-label">Status <span class="required-asterisk">*</span></label>
+            <select class="form-select" id="ativo" name="ativo" [(ngModel)]="servo.ativo" required [disabled]="isCadastro">
+              <option [ngValue]="Status.Ativo">Ativo</option>
+              <option [ngValue]="Status.Inativo">Inativo</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <app-campo-texto label="Email" [(value)]="servo.email" [required] = "true"></app-campo-texto>
+          </div>
+          <div class="col-md-4 mb-3" *ngIf="usuarioLogado?.nivel === NivelAcesso.Desenvolvedor || usuarioLogado?.nivel === NivelAcesso.Diretoria">
+            <label for="nivelAcesso" class="form-label">Nível de Acesso</label>
+            <select class="form-select" id="nivelAcesso" [(ngModel)]="servo.nvaId" name="nivelAcesso" required>
+              <option *ngFor="let nivel of NIVEIS_ACESSO_OPCOES" [ngValue]="nivel.value">{{ nivel.label }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <app-campo-texto label="Senha" [(value)]="servo.senha" [required] = "true" type="password"></app-campo-texto>
+          </div>
+          <div class="col-md-3 mb-3">
+            <app-campo-texto label="Confirmar Senha" [(value)]="servo.confirmaSenha" [required] = "true" type="password"></app-campo-texto>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <app-campo-texto label="Grupo de Oração" [(value)]="servo.grupoOracao" [required] = "true" [disabled]="grupoOracaoBloqueado"></app-campo-texto>
+          </div>
+          <div class="col-md-6 mb-3">
+            <app-campo-cpf [(value)]="servo.cpf" [required] = "true"></app-campo-cpf>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <app-campo-cep [(value)]="servo.cep" [required]="true" (cidadeEncontrada)="atualizarCidade($event)"></app-campo-cep>
+          </div>
+          <div class="col-md-8 mb-3">
+            <app-campo-cidade [(value)]="servo.cidade" [cidades]="cidades" (cidadesChange)="cidades = $event" [required]="true"></app-campo-cidade>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <app-campo-telefone [(value)]="servo.contato" label="Contato (Telefone/WhatsApp)" [required]="true"></app-campo-telefone>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label for="ministerios" class="form-label">Ministério(s)</label>
+            <app-campo-ministerios [(value)]="servo.ministerios" [ministerios]="ministerios" [disabled]="ministerioBloqueado"></app-campo-ministerios>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            Cadastrar Servo
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

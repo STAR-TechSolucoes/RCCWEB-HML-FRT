@@ -1,0 +1,10 @@
+<app-campo-texto
+  label="Contato (Telefone/WhatsApp)"
+  name="telefone"
+  id="telefone"
+  placeholder="(00) 00000-0000"
+  [required]="required"
+  [(value)]="value"
+  (valueChange)="formatarTelefone()"
+  [maxLength]="15"
+></app-campo-texto>

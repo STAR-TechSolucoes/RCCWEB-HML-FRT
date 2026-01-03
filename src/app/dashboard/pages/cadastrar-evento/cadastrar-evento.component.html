@@ -1,0 +1,50 @@
+<main class="content-fluid">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Cadastro de Eventos</h2>
+      <form #eventoForm="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <app-campo-texto label="Nome do Evento" [(value)]="evento.nome" [required] = "true"></app-campo-texto>
+          </div>
+          <div class="col-md-6 mb-3">
+            <app-campo-texto label="Descrição do Evento" [(value)]="evento.descricao" [required] = "true"></app-campo-texto>
+          </div>
+          <div class="col-md-2 mb-3">
+            <app-campo-texto type="text" label="Qtd Máxima de Inscritos" [apenasNumeros]="true" [maxLength]="4" [(value)]="evento.qtdMaximaInscritos" [required]="true"></app-campo-texto>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <app-campo-cep [(value)]="evento.cep" [required]="true" (cidadeEncontrada)="atualizarCidade($event)"></app-campo-cep>
+          </div>
+          <div class="col-md-6 mb-3">
+            <app-campo-cidade [(value)]="evento.cidade" [cidades]="cidades" [required]="true" (cidadesChange)="cidades = $event"></app-campo-cidade>
+          </div>
+          <div class="col-md-2 mb-3">
+            <app-campo-texto [(value)]="evento.numero" label="Número" [maxLength]="4" [required]="true"></app-campo-texto>
+          </div>
+          <div class="col-md-8 mb-3">
+            <app-campo-texto [(value)]="evento.logradouro" label="Logradouro" [required]="true"></app-campo-texto>
+          </div>
+          <div class="col-md-4 mb-3">
+            <app-campo-texto [(value)]="evento.bairro" label="bairro" [required]="true"></app-campo-texto>
+          </div>
+        </div>
+        <hr class="my-4">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <app-campo-imagem [required]="true" label="Imagem do Evento" (imagemChange)="evento.imagemBase64 = $event"></app-campo-imagem>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            Cadastrar Evento
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

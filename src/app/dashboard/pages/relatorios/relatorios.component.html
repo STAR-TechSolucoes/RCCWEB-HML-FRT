@@ -1,0 +1,82 @@
+<main class="content-fluid">
+  <h2 class="mb-4">Central de Relatórios</h2>
+
+  <!-- Card do tipo de relatório -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body d-flex align-items-center">
+      <div class="me-4">
+        <label for="tipoRelatorio" class="form-label mb-0 fw-bold">Tipo de Relatório:</label>
+      </div>
+      <div style="min-width: 220px;">
+        <select class="form-select" id="tipoRelatorio" [(ngModel)]="tipoRelatorio" name="tipoRelatorio" (change)="onTipoRelatorioChange()">
+          <option *ngFor="let tipo of tiposRelatorio" [value]="tipo.value">{{ tipo.label }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card dos filtros -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-3 fw-bold">Filtrar Informações</h5>
+      <hr class="mb-4 mt-0">
+      <form (ngSubmit)="gerarRelatorio()">
+        <div class="row g-3 align-items-end">
+          <ng-container *ngFor="let filtro of filtrosPorTipo[tipoRelatorio]">
+            <div class="col-md-4" *ngIf="filtro.type === 'select'">
+              <label class="form-label">{{ filtro.label }}</label>
+              <select class="form-select" [(ngModel)]="filtros[filtro.key]" [name]="filtro.key">
+                <option *ngFor="let opt of filtro.options" [value]="opt">{{ opt || 'Todos' }}</option>
+              </select>
+            </div>
+            <div class="col-md-4" *ngIf="filtro.type === 'ng-select'">
+              <label class="form-label">{{ filtro.label }}</label>
+              <ng-select
+                [items]="filtro.ngSelectItems"
+                bindLabel="label"
+                bindValue="value"
+                [multiple]="false"
+                [(ngModel)]="filtros[filtro.key]"
+                [name]="filtro.key"
+                [placeholder]="filtro.placeholder || ''"
+                (search)="buscarCidadePorNome($event.term)">
+              </ng-select>
+            </div>
+            <div class="col-md-4" *ngIf="filtro.type === 'text'">
+              <label class="form-label">{{ filtro.label }}</label>
+              <input type="text" class="form-control" [(ngModel)]="filtros[filtro.key]" [name]="filtro.key" [placeholder]="filtro.placeholder">
+            </div>
+            <div class="col-md-2" *ngIf="filtro.type === 'date'">
+              <label class="form-label">{{ filtro.label }}</label>
+              <input type="date" class="form-control" [(ngModel)]="filtros[filtro.key]" [name]="filtro.key">
+            </div>
+          </ng-container>
+          <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-primary w-100" type="submit">
+              <i class="bi bi-funnel-fill"></i> Gerar Relatório
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Card do resultado -->
+  <div class="card shadow-sm mt-4">
+    <div class="card-body">
+      <h5 class="card-title fw-bold">Resultado</h5>
+      <hr class="mb-4 mt-0">
+      <app-grid
+        [columns]="columns"
+        [data]="dadosRelatorio"
+        [loading]="loading"
+        [actions]="[]">
+      </app-grid>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" type="button" (click)="exportarExcel()" *ngIf="dadosRelatorio.length > 0">
+          <i class="bi bi-file-earmark-spreadsheet"></i> Exportar Excel
+        </button>
+      </div>
+    </div>
+  </div>
+</main>

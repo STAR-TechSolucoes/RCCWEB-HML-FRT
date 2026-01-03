@@ -1,0 +1,48 @@
+<div class="center-container">
+  <div class="login-wrapper">
+    <div class="form-box">
+
+      <!-- switch -->
+      <div class="switch-box">
+        <div id="slider-btn" [style.left]="isRegister ? '50%' : '0%'"></div>
+        <button type="button" class="switch-btn" (click)="toggleForm(false)">Login</button>
+        <button type="button" class="switch-btn" (click)="toggleForm(true)">Cadastrar</button>
+      </div>
+
+      <div class="form-container" [class.show-register]="isRegister">
+
+        <!-- LOGIN -->
+        <div class="form-login">
+          <h2 class="form-title">Bem-vindo de volta!</h2>
+          <form (ngSubmit)="login()" #loginForm="ngForm">
+            <div class="input-group">
+              <input type="text" [(ngModel)]="loginData.usrLogin" name="usrLogin" class="form-control" placeholder="Email\Usuário" required>
+            </div>
+            <div class="input-group">
+              <input type="password" [(ngModel)]="loginData.usrSenha" name="usrSenha" class="form-control" placeholder="Senha" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit">Entrar</button>
+          </form>
+        </div>
+
+        <!-- REGISTER -->
+        <div class="form-register">
+          <h2 class="form-title">Crie sua Conta</h2>
+          <form (ngSubmit)="register()" #registerForm="ngForm">
+            <div class="input-group">
+              <input type="text" [(ngModel)]="registerData.usrNome" name="usrNome" class="form-control" placeholder="Nome de Usuário" required>
+            </div>
+            <div class="input-group">
+              <input type="email" [(ngModel)]="registerData.usrEmail" name="usrEmail" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+              <input type="password" [(ngModel)]="registerData.usrSenha" name="usrSenha" class="form-control" placeholder="Senha" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit">Cadastrar</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

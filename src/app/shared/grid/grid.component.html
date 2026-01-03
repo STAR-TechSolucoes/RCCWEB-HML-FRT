@@ -1,0 +1,89 @@
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns"
+            [class.sortable]="isSortable(col)"
+            (click)="isSortable(col) && sortBy(col.key)">
+          {{ col.label }}
+          <i *ngIf="isSortable(col)"
+             class="bi"
+             [ngClass]="{
+               'bi-caret-up-fill': sortKey === col.key && sortDirection === 'asc',
+               'bi-caret-down-fill': sortKey === col.key && sortDirection === 'desc',
+               'bi-arrow-down-up': sortKey !== col.key
+             }"></i>
+        </th>
+        <th *ngIf="actions.length">Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngIf="loading">
+        <td [attr.colspan]="columns.length + (actions.length ? 1 : 0)" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr *ngIf="!loading && pagedData.length === 0">
+        <td [attr.colspan]="columns.length + (actions.length ? 1 : 0)" class="text-center py-4">
+          Nenhum registro encontrado.
+        </td>
+      </tr>
+
+      <tr *ngFor="let row of pagedData">
+        <td *ngFor="let col of columns">
+          <ng-container [ngSwitch]="col.type">
+            <ng-container *ngSwitchCase="'array'">
+              <ng-container *ngIf="isArray(row[col.key]) && row[col.key].length > 0; else nenhumMinisterio">
+                <span *ngFor="let m of row[col.key]" class="badge bg-secondary me-1">{{ m }}</span>
+              </ng-container>
+              <ng-template #nenhumMinisterio>
+                <small class="text-muted">Nenhum</small>
+              </ng-template>
+            </ng-container>
+
+            <span *ngSwitchCase="'status'">
+              <span class="badge" [ngClass]="row.usrAtivo === 1 ? 'bg-success' : 'bg-danger'">
+                {{ getCellValue(row, col) }}
+              </span>
+            </span>
+
+            <span *ngSwitchDefault>
+              {{ getCellValue(row, col) || 'Não informado' }}
+            </span>
+          </ng-container>
+        </td>
+
+        <td *ngIf="actions.length">
+          <button *ngFor="let act of actions"
+                  class="btn btn-sm me-2"
+                  [ngClass]="act.class"
+                  (click)="onAction(act.key, row)"
+                  [title]="act.label">
+            <i class="bi" [ngClass]="act.icon"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginação -->
+  <div *ngIf="totalPages > 1" class="d-flex justify-content-center align-items-center mt-3">
+    <button class="btn btn-sm btn-light me-2"
+            (click)="prevPage()"
+            [disabled]="currentPage === 1">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+
+    <button class="btn btn-sm btn-light ms-2"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+</div>

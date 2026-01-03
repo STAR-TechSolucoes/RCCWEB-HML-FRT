@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-green: #1DB954;
+    --accent-yellow: #FFD700;
+    --text-white: #FFFFFF;
+    --background-dark: #121212;
+    --container-dark: #282828;
+}
+
+.required-asterisk {
+  color: #dc3545 !important;
+}
