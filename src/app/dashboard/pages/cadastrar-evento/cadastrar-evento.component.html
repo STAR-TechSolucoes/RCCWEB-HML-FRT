@@ -89,7 +89,39 @@
           </button>
         </div>
       </form>
-
+      <div class="card mt-4">
+        <div class="card-header">Configurar Formulário de Inscrição</div>
+        <div class="card-body">
+          <div *ngFor="let campo of camposCustomizados; let i = index" class="row mb-3 border-bottom pb-2">
+            <div class="col-md-4">
+              <input type="text" [(ngModel)]="campo.label" class="form-control" placeholder="Pergunta (ex: Tamanho da Camisa)">
+            </div>
+            <div class="col-md-3">
+              <select [(ngModel)]="campo.tipo" class="form-select">
+                <option value="text">Texto Curto</option>
+                <option value="number">Número</option>
+                <option value="select">Seleção (Múltipla Escolha)</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <div class="form-check pt-2">
+                <input type="checkbox" [(ngModel)]="campo.obrigatorio" class="form-check-input">
+                <label class="form-check-label">Obrigatório</label>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button (click)="removerCampo(i)" class="btn btn-danger btn-sm">X</button>
+            </div>
+            
+            <!-- Se for select, mostra campo para opções -->
+            <div class="col-12 mt-2" *ngIf="campo.tipo === 'select'">
+              <input type="text" class="form-control form-control-sm" placeholder="Opções separadas por vírgula (ex: P, M, G, GG)" 
+                      (blur)="campo.opcoes = $any($event.target).value.split(',')">
+            </div>
+          </div>
+          <button (click)="adicionarCampo()" class="btn btn-outline-primary btn-sm">+ Adicionar Pergunta</button>
+        </div>
+      </div>
     </div>
   </div>
 </main>

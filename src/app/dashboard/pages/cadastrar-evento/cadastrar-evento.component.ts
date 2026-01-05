@@ -49,25 +49,51 @@ export class CadastrarEventoComponent implements OnInit {
     }
   }
 
+
+camposCustomizados: any[] = [];
+
+  // Método para adicionar um novo campo na lista
+  adicionarCampo() {
+    this.camposCustomizados.push({
+      label: '',
+      tipo: 'text', // padrão
+      obrigatorio: false,
+      opcoes: [] // usado se o tipo for 'select'
+    });
+  }
+
+  removerCampo(index: number) {
+    this.camposCustomizados.splice(index, 1);
+  }
+
+  // Quando salvar o evento, você chama a rota de configurar-grade que criamos
+  async salvarGrade(eventoId: number) {
+    await this.apiService.post(`/eventos/${eventoId}/configurar-grade`, { 
+      campos: this.camposCustomizados 
+    }).toPromise();
+  }
+
   carregarEvento(id: number) {
     this.loaderService.exibir();
     this.apiService.get<any>(`/eventos/${id}`).subscribe({
       next: (res) => {
         this.loaderService.esconder();
-        // Como o banco retorna 'evtImagem' e nossa interface agora é 'evtImagem',
-        // o spread operator (...) funciona perfeitamente sem mapeamento manual.
         this.evento = { ...res };
         
+        if (res.camposCustomizados) {
+            this.camposCustomizados = res.camposCustomizados;
+        }
+
         if (this.evento.evtCidade) {
           this.cidades = [{ label: this.evento.evtCidade, value: this.evento.evtCidade }];
         }
       },
       error: () => {
         this.loaderService.esconder();
-        this.modalService.erro('Erro', 'Não foi possível carregar os dados do evento.');
+        this.modalService.erro('Erro', 'Não foi possível carregar os dados.');
       }
     });
-  }
+}
 
   private getNovoEvento(): Evento {
     return {
@@ -91,33 +117,35 @@ export class CadastrarEventoComponent implements OnInit {
   }
 
   cadastrar(form: NgForm) {
-    if (!this.evento.evtNome || !this.evento.evtDataHoraInicio) {
-      this.modalService.aviso('Atenção', 'Preencha os campos obrigatórios.');
-      return;
-    }
-
-    this.loaderService.exibir();
-
-    // Payload simplificado: enviamos o objeto evento completo
-    const payload = {
-      ...this.evento,
-      evtQtdMaxInscritos: Number(this.evento.evtQtdMaxInscritos)
-    };
-
-    const request = this.modoEdicao 
-      ? this.apiService.put<any>(`/eventos/${this.evento.evtId}`, payload)
-      : this.apiService.post<any>('/eventos', payload);
-
-    request.subscribe({
-      next: () => {
-        this.loaderService.esconder();
-        this.modalService.sucesso('Sucesso', this.modoEdicao ? 'Evento atualizado!' : 'Evento criado!');
-        this.router.navigate(['/dashboard/listar-eventos']);
-      },
-      error: (err) => {
-        this.loaderService.esconder();
-        this.modalService.erro('Erro', err.error?.message || 'Erro ao salvar.');
+      if (!this.evento.evtNome || !this.evento.evtDataHoraInicio) {
+        this.modalService.aviso('Atenção', 'Preencha os campos obrigatórios.');
+        return;
       }
-    });
+
+      this.loaderService.exibir();
+
+      // --- O AJUSTE ESTÁ AQUI ---
+      const payload = {
+        ...this.evento,
+        evtQtdMaxInscritos: Number(this.evento.evtQtdMaxInscritos),
+        // Adicionamos os campos que o usuário criou no "Low-Code"
+        camposCustomizados: this.camposCustomizados 
+      };
+
+      const request = this.modoEdicao 
+        ? this.apiService.put<any>(`/eventos/${this.evento.evtId}`, payload)
+        : this.apiService.post<any>('/eventos', payload);
+
+      request.subscribe({
+        next: () => {
+          this.loaderService.esconder();
+          this.modalService.sucesso('Sucesso', this.modoEdicao ? 'Evento atualizado!' : 'Evento criado!');
+          this.router.navigate(['/dashboard/listar-eventos']);
+        },
+        error: (err) => {
+          this.loaderService.esconder();
+          this.modalService.erro('Erro', err.error?.message || 'Erro ao salvar.');
+        }
+      });
   }
 }
