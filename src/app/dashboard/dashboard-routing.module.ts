@@ -24,7 +24,6 @@ const routes: Routes = [
       { path: 'relatorios', component: RelatoriosComponent },
       { path: 'configuracoes', component: ConfiguracoesComponent },
       { path: 'listar-eventos', component: ListarEventosComponent },
-      { path: 'editar-evento/:id', component: CadastrarEventoComponent },
     ]
   }
 ];

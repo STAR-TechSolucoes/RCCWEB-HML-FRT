@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { ModalService } from '../../../shared/modal.service';
 import { LoaderService } from '../../../shared/loader.service';
+import { Router } from '@angular/router';
 
 interface Evento {
   evtId: number;
@@ -33,12 +34,19 @@ export class ListarEventosComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private modalService: ModalService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.carregarEventos();
   }
+
+    editarEvento(id: number) {
+      this.router.navigate(['/dashboard/cadastrar-evento'], {
+        queryParams: { id }
+      });
+    } 
 
   carregarEventos() {
     this.loaderService.exibir();
