@@ -13,6 +13,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
 import { CadastrarEventoComponent } from './pages/cadastrar-evento/cadastrar-evento.component';
+import { ListarEventosComponent } from './pages/listar-eventos/listar-eventos.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CadastrarEventoComponent } from './pages/cadastrar-evento/cadastrar-eve
     RelatoriosComponent,
     ConfiguracoesComponent,
     DashboardLayoutComponent,
-    CadastrarEventoComponent
+    CadastrarEventoComponent,
+    ListarEventosComponent
   ],
   imports: [
     CommonModule,

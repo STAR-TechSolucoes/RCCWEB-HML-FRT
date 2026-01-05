@@ -1,18 +1,25 @@
-<div class="form-group">
-  <label [for]="id" class="form-label">
-    {{ label }}
-    <span *ngIf="required" class="required-asterisk">*</span>
+<div class="campo-imagem-wrapper">
+  <label [for]="id" class="form-label fw-bold">
+    {{ label }} <span *ngIf="required" class="text-danger">*</span>
   </label>
-  <div class="">
-    <input
-      [id]="id"
-      type="file"
-      accept="image/png, image/jpeg, image/jpg, image/gif"
-      class="form-control"
-      (change)="onFileChange($event)"
-    />
-    <div *ngIf="preview" class="campo-imagem-preview">
-      <img [src]="preview" alt="Preview" class="img-thumbnail" />
-    </div>
+
+  <!-- Área de Preview (Ficou maior aqui) -->
+  <div class="preview-container mb-3" *ngIf="preview">
+    <img [src]="preview" alt="Preview da Imagem" class="img-fluid img-preview shadow-sm">
+    <button type="button" class="btn-remover" (click)="removerImagem()" title="Remover imagem">
+      <i class="bi bi-x-circle-fill"></i>
+    </button>
   </div>
+
+  <!-- Botão de Upload -->
+  <div class="input-group">
+    <input 
+      type="file" 
+      class="form-control" 
+      [id]="id" 
+      (change)="onFileChange($event)" 
+      accept="image/*"
+    >
+  </div>
+  <small class="text-muted">Formatos aceitos: JPG, PNG ou GIF.</small>
 </div>
