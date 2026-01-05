@@ -41,7 +41,8 @@ export class CadastrarEventoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.queryParamMap.get('id'); 
+    
     if (id) {
       this.modoEdicao = true;
       this.carregarEvento(Number(id));
@@ -73,7 +74,7 @@ export class CadastrarEventoComponent implements OnInit {
       evtNome: '', evtDescricao: '', evtQtdMaxInscritos: 0,
       evtLogradouro: '', evtNumero: '', evtBairro: '',
       evtCep: '', evtCidade: '', evtDataHoraInicio: '',
-      evtDataHoraFim: '', evtObs: '', evtImagem: '' // Inicializado vazio
+      evtDataHoraFim: '', evtObs: '', evtImagem: ''
     };
   }
 
