@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable,  PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -10,15 +11,21 @@ export class ApiService {
 
   private readonly API_BASE_URL = 'https://starwebti.com/api'; 
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient
+  ) {}
 
   private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
+    // const token = localStorage.getItem('authToken');
     
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
+    if (isPlatformBrowser(this.platformId)) {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+          headers = headers.set('Authorization', `Bearer ${token}`);
+        }
+      }
     return headers;
   }
   get<T>(endpoint: string): Observable<T> {

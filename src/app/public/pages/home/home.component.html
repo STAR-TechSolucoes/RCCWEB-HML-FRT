@@ -1,0 +1,60 @@
+<!-- Hero Section com Efeito de Profundidade -->
+<header class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <span class="badge-top">RCC BARRETOS</span>
+    <h1 class="display-3 fw-black anim-up">Momentos que <br><span class="text-gradient">Transformam Vidas.</span></h1>
+    <p class="lead anim-up-delay">Experimente o Batismo no Espírito Santo. Encontre o grupo de oração mais próximo de você.</p>
+    <div class="hero-btns anim-up-delay-2">
+      <a href="#eventos" class="btn btn-main">Explorar Eventos</a>
+      <a href="#" class="btn btn-outline-light">Conhecer a RCC</a>
+    </div>
+  </div>
+  <div class="scroll-indicator"></div>
+</header>
+
+<main class="container mt-n5" id="eventos">
+  <!-- Filtros/Busca (Marketing: Facilite a vida do usuário) -->
+  <div class="row mb-5 align-items-center">
+    <div class="col-md-6">
+      <h2 class="section-title">Próximos Eventos</h2>
+      <div class="title-underline"></div>
+    </div>
+  </div>
+
+  <!-- Grid de Eventos -->
+  <div class="row g-4">
+    <div class="col-12 col-sm-6 col-lg-4" *ngFor="let evento of eventos">
+      <div class="event-card">
+        <div class="card-img-wrapper">
+          <div class="event-badge" [ngClass]="{'bg-success': true}">Inscrições Abertas</div>
+          <img [src]="evento.evtImagem || 'assets/default-event.jpg'" class="card-img-custom" alt="Banner">
+          <div class="img-overlay"></div>
+        </div>
+        
+        <div class="card-content">
+          <div class="event-date">
+            <span class="day">{{ evento.evtDataHoraInicio | date:'dd' }}</span>
+            <span class="month">{{ evento.evtDataHoraInicio | date:'MMM' }}</span>
+          </div>
+          
+          <div class="event-info">
+            <h3 class="event-title">{{ evento.evtNome }}</h3>
+            <p class="event-location">
+              <i class="bi bi-geo-alt"></i> {{ evento.evtCidade }}
+            </p>
+          </div>
+          
+          <p class="event-description">{{ evento.evtDescricao | slice:0:100 }}...</p>
+          
+          <div class="card-footer-custom">
+            <button [routerLink]="['/e', evento.evtId]" class="btn-subscribe">
+              GARANTIR MINHA VAGA
+              <i class="bi bi-arrow-right-short"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
