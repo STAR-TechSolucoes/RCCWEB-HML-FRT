@@ -9,12 +9,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { InscricaoPublicaComponent } from './public/pages/inscricao-publica/inscricao-publica.component';
 import { HomeComponent } from './public/pages/home/home.component';
+import { ConsultarInscricaoComponent } from './public/pages/consultar-inscricao/consultar-inscricao.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InscricaoPublicaComponent,
     HomeComponent,
+    ConsultarInscricaoComponent,
   ],
   imports: [
     BrowserModule,

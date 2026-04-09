@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
+import { ModalService } from '../../../shared/modal.service';
 
 @Component({
   selector: 'app-inscricao-publica',
@@ -10,28 +11,55 @@ import { ApiService } from '../../../services/api.service';
 })
 export class InscricaoPublicaComponent implements OnInit {
   evento: any;
-  respostas: any = {}; // Objeto que vai guardar os campos dinâmicos
 
-  constructor(private route: ActivatedRoute, private api: ApiService) {}
+  ptcNome: string = '';
+  ptcCpf: string = '';
+  ptcEmail: string = '';
+  ptcDataNascimento: string = '';
+
+  respostasDinamicas: any = {}; 
+
+  constructor(
+    private route: ActivatedRoute, 
+    private api: ApiService,
+    private modal: ModalService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    // Chamando a nova rota pública que você criou no passo 3
     this.api.get<any>(`/public/eventos/${id}`).subscribe(res => {
       this.evento = res;
     });
   }
 
   confirmarInscricao() {
+
     const payload = {
       evtId: this.evento.evtId,
-      // Aqui enviamos as respostas que o usuário preencheu no formulário dinâmico
-      respostas: this.respostas 
+      ptcNome: this.ptcNome,
+      ptcCpf: this.ptcCpf,
+      ptcEmail: this.ptcEmail,
+      ptcDataNascimento: this.ptcDataNascimento,
+      incRespostas: this.respostasDinamicas
     };
-    
+
+    if (!this.ptcNome || !this.ptcCpf) {
+      alert('Por favor, preencha seu nome e CPF.');
+      return;
+    }
+
     this.api.post('/public/inscrever', payload).subscribe({
-      next: () => alert('Inscrição realizada com sucesso!'),
-      error: () => alert('Erro ao realizar inscrição.')
-    });
+            next: (res: any) => {
+                this.modal.sucesso('Sucesso!', 'Sua inscrição foi confirmada.');
+                
+                setTimeout(() => {
+                    this.router.navigate(['/']);
+                }, 2000);
+            },
+            error: (err) => {
+                this.modal.erro('Erro', err.error?.message || 'Falha na inscrição');
+            }
+        });
   }
 }

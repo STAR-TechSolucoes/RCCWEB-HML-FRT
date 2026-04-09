@@ -156,3 +156,59 @@ $transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     .display-3 { font-size: 2.5rem; }
   }
 }
+
+/* Estilo da Navbar Customizada */
+.custom-navbar {
+  padding: 1.2rem 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  transition: all 0.3s ease;
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    margin: 0 10px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.95rem;
+    
+    &:hover {
+      color: #ffbd59 !important; /* Cor accent/dourada */
+    }
+  }
+
+  /* Dropdown Estilizado */
+  .dropdown-menu {
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background-color: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+
+    .dropdown-item {
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      
+      &:hover {
+        background-color: rgba(255, 189, 89, 0.2);
+        color: #ffbd59;
+      }
+    }
+  }
+}
+
+/* Ajuste do Hero para não ficar por baixo do menu no mobile */
+@media (max-width: 991px) {
+  .custom-navbar {
+    background: rgba(0,0,0,0.95) !important;
+    padding: 0.8rem 0;
+  }
+}
+
+/* Garante que o conteúdo do Hero não suba demais */
+.hero-content {
+  padding-top: 100px; 
+}

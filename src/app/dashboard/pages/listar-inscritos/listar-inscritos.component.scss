@@ -1,0 +1,41 @@
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  background: #e9ecef;
+  color: #495057;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.extra-small {
+  font-size: 0.75rem;
+}
+
+.dynamic-answers {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.table th {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.table tr {
+  transition: background 0.2s;
+  &:hover {
+    background-color: rgba(0,0,0,0.01);
+  }
+}
+
+.btn-sm.rounded-pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+}

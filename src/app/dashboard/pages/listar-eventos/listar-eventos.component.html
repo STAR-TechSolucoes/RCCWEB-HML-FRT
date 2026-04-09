@@ -60,6 +60,11 @@
                           (click)="editarEvento(evento.evtId)">
                       <i class="bi bi-pencil"></i>
                   </button>
+                  <button class="btn btn-sm btn-outline-info" 
+                          [routerLink]="['/dashboard/eventos', evento.evtId, 'inscritos']"
+                          title="Ver Inscritos">
+                    <i class="bi bi-people-fill"></i>
+                  </button>
                   <button class="btn btn-sm btn-outline-danger" title="Excluir" (click)="confirmarExclusao(evento)">
                    <i class="bi bi-trash"></i>
                   </button>

@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
 import { CadastrarEventoComponent } from './pages/cadastrar-evento/cadastrar-evento.component';
 import { ListarEventosComponent } from './pages/listar-eventos/listar-eventos.component';
+import { ListarInscritosComponent } from './pages/listar-inscritos/listar-inscritos.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ListarEventosComponent } from './pages/listar-eventos/listar-eventos.co
     ConfiguracoesComponent,
     DashboardLayoutComponent,
     CadastrarEventoComponent,
-    ListarEventosComponent
+    ListarEventosComponent,
+    ListarInscritosComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,128 @@
+<main class="content-fluid py-4">
+  <!-- Cabeçalho e Botão Voltar -->
+  <div class="d-flex align-items-center mb-4">
+    <button class="btn btn-outline-secondary me-3" routerLink="/dashboard/listar-eventos">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    <div>
+      <h2 class="m-0 fw-bold text-dark">Gestão de Inscritos</h2>
+      <small class="text-muted">Evento: {{ inscritos[0]?.evtNome || 'Carregando...' }}</small>
+    </div>
+  </div>
+
+  <!-- Cards de Resumo (Stats) -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 bg-primary text-white">
+        <div class="card-body">
+          <h6 class="text-white-50">Total Inscritos</h6>
+          <h3 class="fw-bold">{{ inscritos.length }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 bg-success text-white">
+        <div class="card-body">
+          <h6 class="text-white-50">Presenças Confirmadas</h6>
+          <h3 class="fw-bold">{{ totalPresentes }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 bg-info text-white">
+        <div class="card-body">
+          <h6 class="text-white-50">Total Pago</h6>
+          <h3 class="fw-bold">R$ {{ totalArrecadado | number:'1.2-2' }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-8">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control border-start-0" placeholder="Buscar por nome ou e-mail..." 
+                   [(ngModel)]="filtroNome" (input)="filtrar()">
+          </div>
+        </div>
+        <div class="col-md-4 text-end">
+          <button class="btn btn-light border" (click)="carregarInscritos()">
+            <i class="bi bi-arrow-clockwise me-2"></i>Sincronizar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela Profissional -->
+  <div class="card shadow-sm border-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light text-muted small text-uppercase">
+          <tr>
+            <th class="ps-4">Participante</th>
+            <th>Pagamento</th>
+            <th>Check-in / Presença</th>
+            <th>Respostas (Low-Code)</th>
+            <th class="text-end pe-4">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let inc of inscritosFiltrados">
+            <td class="ps-4">
+              <div class="d-flex align-items-center">
+                <div class="avatar-circle me-3">{{ inc.ptcNome | slice:0:1 }}</div>
+                <div>
+                  <div class="fw-bold text-dark">{{ inc.ptcNome }}</div>
+                  <div class="small text-muted">{{ inc.ptcEmail }}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex flex-column">
+                <span class="small fw-bold">R$ {{ inc.evtValorPago | number:'1.2-2' }}</span>
+                <span class="text-muted extra-small">de R$ {{ inc.evtValorTotal | number:'1.2-2' }}</span>
+              </div>
+            </td>
+            <td>
+              <button (click)="alterarPresenca(inc)" 
+                      [ngClass]="inc.incCompareceu === 'S' ? 'btn-success' : 'btn-outline-warning'"
+                      class="btn btn-sm rounded-pill px-3 d-flex align-items-center gap-2">
+                <i class="bi" [ngClass]="inc.incCompareceu === 'S' ? 'bi-check-circle-fill' : 'bi-clock'"></i>
+                {{ inc.incCompareceu === 'S' ? 'Confirmado' : 'Pendente' }}
+              </button>
+            </td>
+            <td>
+              <!-- Dropdown ou lista encurtada para não poluir -->
+              <div class="dynamic-answers">
+                <div *ngFor="let label of getLabels(inc.incRespostas)" class="extra-small">
+                  <span class="text-muted">{{ label }}:</span> {{ inc.incRespostas[label] }}
+                </div>
+                <div *ngIf="getLabels(inc.incRespostas).length === 0" class="text-muted italic extra-small">
+                  Nenhum campo extra
+                </div>
+              </div>
+            </td>
+            <td class="text-end pe-4">
+              <div class="dropdown">
+                <button class="btn btn-link text-muted p-0" data-bs-toggle="dropdown">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-cash me-2"></i>Lançar Pagamento</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-envelope me-2"></i>Enviar E-mail</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Remover</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

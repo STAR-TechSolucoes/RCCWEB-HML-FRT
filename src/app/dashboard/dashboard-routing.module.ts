@@ -8,6 +8,7 @@ import { ConfiguracoesComponent } from './pages/configuracoes/configuracoes.comp
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
 import { CadastrarEventoComponent } from './pages/cadastrar-evento/cadastrar-evento.component';
 import { ListarEventosComponent } from './pages/listar-eventos/listar-eventos.component';
+import { ListarInscritosComponent } from './pages/listar-inscritos/listar-inscritos.component';
 import { AuthGuard } from '../core/auth.guard';
 import { AdminGuard } from '../core/admin.guard';
 
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'relatorios', component: RelatoriosComponent },
       { path: 'configuracoes', component: ConfiguracoesComponent },
       { path: 'listar-eventos', component: ListarEventosComponent },
+      { path: 'eventos/:id/inscritos', component: ListarInscritosComponent }
     ]
   }
 ];

@@ -1,13 +1,52 @@
-<!-- Hero Section com Efeito de Profundidade -->
-<header class="hero-section">
+<!-- Navbar Superior -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" routerLink="/">
+      <span class="text-white">RCC</span><span class="text-warning">BARRETOS</span>
+    </a>
+
+    <!-- Botão Hamburguer (Mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link active" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#eventos">Eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/minhas-inscricoes">Minhas Inscrições</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#quemsomos">Quem Somos</a>
+        </li>
+
+        <!-- Botão de Login -->
+        <li class="nav-item ms-lg-3">
+          <a routerLink="/login" class="btn btn-sm btn-outline-warning px-4 rounded-pill fw-bold">
+            <i class="bi bi-person-fill me-1"></i> LOGIN
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero-section"id="home">
   <div class="hero-overlay"></div>
-  <div class="container hero-content">
-    <span class="badge-top">RCC BARRETOS</span>
+  <div class="container hero-content" >
+    <span class="badge-top">RENOVAÇÃO CARISMÁTICA CATÓLICA</span>
     <h1 class="display-3 fw-black anim-up">Momentos que <br><span class="text-gradient">Transformam Vidas.</span></h1>
     <p class="lead anim-up-delay">Experimente o Batismo no Espírito Santo. Encontre o grupo de oração mais próximo de você.</p>
     <div class="hero-btns anim-up-delay-2">
-      <a href="#eventos" class="btn btn-main">Explorar Eventos</a>
-      <a href="#" class="btn btn-outline-light">Conhecer a RCC</a>
+      <a href="#eventos" class="btn btn-outline-warning">Explorar Eventos</a>
+      <a href="#" class="btn btn-outline-light ms-2">Conhecer a RCC</a>
     </div>
   </div>
   <div class="scroll-indicator"></div>
@@ -57,4 +96,58 @@
       </div>
     </div>
   </div>
+
+      <!-- Seção Quem Somos -->
+    <section id="quemsomos" class="about-section py-5">
+      <div class="container py-lg-5">
+        <div class="row align-items-center">
+          
+          <!-- Lado Esquerdo: Imagem/Identidade -->
+          <div class="col-lg-5 mb-4 mb-lg-0">
+            <div class="about-image-wrapper">
+              <img src="https://www.diocesedebarretos.com.br/wp-content/uploads/2025/03/Capa-Destaque-rcc-olimpia.png" alt="RCC Barretos" class="img-fluid rounded-4 shadow-lg">
+              <div class="experience-badge">
+                <span class="number">RCC</span>
+                <span class="text"> Barretos - Retiro de Carnaval 2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lado Direito: Texto -->
+          <div class="col-lg-7 ps-lg-5">
+            <h6 class="text-primary fw-bold text-uppercase letter-spacing-2 mb-3">Nossa Identidade</h6>
+            <h2 class="display-5 fw-bold mb-4">Uma Corrente de Graça para o Mundo</h2>
+            <p class="lead text-muted mb-4">
+              A Renovação Carismática Católica (RCC) é um movimento que visa proporcionar uma experiência pessoal com o amor de Deus, através do batismo no Espírito Santo.
+            </p>
+            
+            <div class="row g-4 mb-5">
+              <div class="col-sm-6">
+                <div class="d-flex align-items-start">
+                  <div class="icon-box bg-light-blue me-3">
+                    <i class="bi bi-fire text-primary"></i>
+                  </div>
+                  <div>
+                    <h5 class="fw-bold mb-1">Espiritualidade</h5>
+                    <p class="small text-muted mb-0">Vivência profunda dos carismas e da oração pessoal.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="d-flex align-items-start">
+                  <div class="icon-box bg-light-blue me-3">
+                    <i class="bi bi-people-fill text-primary"></i>
+                  </div>
+                  <div>
+                    <h5 class="fw-bold mb-1">Fraternidade</h5>
+                    <p class="small text-muted mb-0">União em grupos de oração espalhados por toda a diocese.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
 </main>

@@ -108,7 +108,8 @@ camposCustomizados: any[] = [];
     if (typeof dados === 'string') {
       this.evento.evtCidade = dados;
     } else {
-      this.evento.evtCidade = `${dados.localidade || dados.cidade} - ${dados.uf || ''}`;
+      this.evento.evtCidade = `${dados.localidade || dados.cidade}`;
+      // - ${dados.uf
       this.evento.evtLogradouro = dados.logradouro || '';
       this.evento.evtBairro = dados.bairro || '';
       this.evento.evtCep = dados.cep || this.evento.evtCep;

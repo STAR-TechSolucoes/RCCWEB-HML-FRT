@@ -1,0 +1,87 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" routerLink="/">
+      <span class="text-white">RCC</span><span class="text-warning">BARRETOS</span>
+    </a>
+
+    <!-- Botão Hamburguer (Mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link active" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#eventos">Eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/minhas-inscricoes">Minhas Inscrições</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#quemsomos">Quem Somos</a>
+        </li>
+
+        <!-- Botão de Login -->
+        <li class="nav-item ms-lg-3">
+          <a routerLink="/login" class="btn btn-sm btn-outline-warning px-4 rounded-pill fw-bold">
+            <i class="bi bi-person-fill me-1"></i> LOGIN
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero-section"id="home">
+  <div class="hero-overlay"></div>
+  <div class="container hero-content" >
+    <span class="badge-top">RENOVAÇÃO CARISMÁTICA CATÓLICA</span>
+    <h1 class="display-3 fw-black anim-up">Consulte com seu CPF no campo abaixo.</h1>
+  </div>
+  <div class="scroll-indicator"></div>
+</header>
+
+<div class="container py-5" id="consulta">
+  <div class="row justify-content-center bloco">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 p-4">
+        <h2 class="fw-bold mb-4 text-center">Consultar Inscrição</h2>
+        
+        <div class="mb-4">
+          <app-campo-cpf [(value)]="cpfConsulta" (valueChange)="consultar()"></app-campo-cpf>
+          <small class="text-muted">Digite seu CPF para ver seus eventos.</small>
+        </div>
+
+        <div *ngIf="buscou && inscricoes.length > 0">
+          <h5 class="mb-3">Olá, {{ inscricoes[0].ptcNome }}!</h5>
+          
+          <div class="list-group">
+            <div *ngFor="let inc of inscricoes" class="list-group-item list-group-item-action border-0 shadow-sm mb-2 rounded">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1 fw-bold">{{ inc.evtNome }}</h6>
+                <small>{{ inc.evtDataHoraInicio | date:'dd/MM/yyyy' }}</small>
+              </div>
+              <p class="mb-1 small text-muted">{{ inc.evtCidade }}</p>
+              
+              <div class="mt-2">
+                <span class="badge" [ngClass]="inc.evtValorPago >= inc.evtValorTotal && inc.evtValorTotal != 0 ? 'bg-success' : 'bg-warning'">
+                  {{ inc.evtValorPago >= inc.evtValorTotal && inc.evtValorTotal != 0 ? 'Pagamento Confirmado' : 'Pagamento Pendente' }}
+                </span>
+                <span class="badge bg-info ms-2" *ngIf="inc.incCompareceu === 'S'">Presença Confirmada</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="buscou && inscricoes.length === 0" class="alert alert-warning">
+          Nenhuma inscrição encontrada para este CPF.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
